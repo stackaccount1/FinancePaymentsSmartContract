@@ -1,0 +1,13 @@
+dependencies:
+compiler:
+  vyper:
+    version: 0.2.0
+  solc:
+    remappings:
+      - ''
+dotenv: .env
+networks:
+  default: development
+  kovan: active
+wallets:
+  from_key: ${PRIVATE_KEY}
