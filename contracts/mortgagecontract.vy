@@ -1,4 +1,3 @@
-# @version ^0.2.0
 # Objects 
 bank: public(address)
 mortgagor: public(address)
@@ -9,11 +8,15 @@ paymentAmount: public(uint256)
 paymentsMade : public(uint256)
 interestportion : public(uint256)
 towardprinciple : public(uint256)
+placeholderb : public(uint256)
+placeholdera : public(uint256)
 
 #Events
 event Payment:
     paymentAmount : uint256
     paymentMade : uint256
+    towardsPrinciple : uint256
+    interestPaid : uint256
 
 event Principlepaid:
     sender : indexed(address)
@@ -21,6 +24,9 @@ event Principlepaid:
     
 event Withdrawal:
     value : uint256
+
+event Principlebalance:
+    valuebal : uint256
 
 #Funtions
 @external
@@ -43,9 +49,12 @@ def makePayment():
     self.towardprinciple = msg.value - self.interestportion
     self.principle = self.principle - self.towardprinciple
     self.paymentsMade = self.paymentsMade + 1
+    self.placeholderb = self.interestportion
+    self.placeholdera = self.towardprinciple
     self.interestportion = 0
     self.towardprinciple = 0
-    log Payment(msg.value, self.paymentsMade)
+    log Payment(msg.value, self.paymentsMade, self.placeholdera, self.placeholderb)
+    #return self.principle, self.placeholdera, self.placeholderb
 
 # Make Unscheduled Principle Payment 
 @external
@@ -55,8 +64,10 @@ def payPrinciple():
     self.principle = self.principle - msg.value
     log Principlepaid(msg.sender, msg.value)
 
+@view
 @external
 def returnprinciple() -> uint256:
+    log Principlebalance(self.principle)
     return self.principle
 
 # Bank withdraw payment from mortgage 

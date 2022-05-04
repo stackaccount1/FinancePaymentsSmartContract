@@ -7,9 +7,9 @@ from scripts.helpful_scripts import (
 def deploy_md():
     account = accounts.add(config["wallets"]["from_key"])
     #account = get_account()
-    account.deploy(mortgagecontract)
+    deploycontract = mortgagecontract.deploy(900_000_000_000_000_000_000, 30_000_000_000_000_000, 1_000_000_000_000_000_000, {"from" : account})
     print(account)
-    return(mortgagecontract)
+    return(deploycontract)
 
 def main():
     deploy_md()
